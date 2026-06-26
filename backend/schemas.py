@@ -1,11 +1,12 @@
 from pydantic import BaseModel
 from datetime import date
+from typing import Optional
 
 class PantryItemCreate(BaseModel):
     name: str
     quantity: int
-    category: str | None = None
-    expiration_date: date | None = None
+    category: Optional[str] = None
+    expiration_date: Optional[date] = None
 
 class PantryItemResponse(PantryItemCreate):
     id: int
