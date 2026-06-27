@@ -26,7 +26,7 @@ def create_pantry_item(
         quantity=pantry_item.quantity,
         category=pantry_item.category,
         expiration_date=pantry_item.expiration_date,
-        user_id=1
+        user_id=None
     )
 
     db.add(db_item)
