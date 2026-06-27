@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 import models
@@ -41,3 +41,59 @@ def get_pantry_items(
 ):
     items = db.query(models.PantryItem).all()
     return items
+
+@app.get("/pantry-items/{item_id}")
+def get_pantry_item(
+    item_id: int,
+    db: Session = Depends(get_db)
+):
+    item = db.query(models.PantryItem).filter(
+        models.PantryItem.id == item_id
+    ).first()
+    
+    if item is None:
+        raise HTTPException(status_code=404, detail="Pantry item not found")
+    
+    return item
+
+@app.delete("/pantry-items/{item_id}")
+def delete_pantry_item(
+    item_id: int,
+    db: Session = Depends(get_db)
+):
+    item = db.query(models.PantryItem).filter(
+        models.PantryItem.id == item_id
+    ).first()
+    
+    if item is None:
+        raise HTTPException(status_code=404, detail="Pantry item not found")
+    
+    db.delete(item)
+    db.commit()
+
+    return {
+        "message": "Pantry item deleted successfully"
+    }
+
+@app.put("/pantry-items/{item_id}")
+def update_pantry_item(
+    item_id: int,
+    updated_item: schemas.PantryItemCreate,
+    db: Session = Depends(get_db)
+):
+    item = db.query(models.PantryItem).filter(
+        models.PantryItem.id == item_id
+    ).first()
+
+    if item is None:
+        raise HTTPException(status_code=404, detail="Pantry item not found")
+
+    item.name = updated_item.name
+    item.quantity = updated_item.quantity
+    item.category = updated_item.category
+    item.expiration_date = updated_item.expiration_date
+
+    db.commit()
+    db.refresh(item)
+
+    return item
