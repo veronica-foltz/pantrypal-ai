@@ -34,3 +34,10 @@ def create_pantry_item(
     db.refresh(db_item)
 
     return db_item
+
+@app.get("/pantry-items")
+def get_pantry_items(
+    db: Session = Depends(get_db)
+):
+    items = db.query(models.PantryItem).all()
+    return items
