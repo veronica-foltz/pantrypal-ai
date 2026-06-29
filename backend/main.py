@@ -16,6 +16,24 @@ def root():
         "message": "Welcome to PantryPal AI!"
     }
 
+@app.post("/register", response_model=schemas.UserResponse)
+def register_user(
+    user: schemas.UserCreate,
+    db: Session = Depends(get_db)
+):
+
+    db_user = models.User(
+        username=user.username,
+        email=user.email,
+        hashed_password=user.password
+    )
+
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+
+    return db_user
+
 @app.post("/pantry-items")
 def create_pantry_item(
     pantry_item: schemas.PantryItemCreate,
