@@ -5,7 +5,7 @@ import models
 import schemas
 
 from database import engine, Base, get_db
-from security import hash_password
+from security import hash_password, verify_password
 
 Base.metadata.create_all(bind=engine)
 
@@ -34,6 +34,34 @@ def register_user(
     db.refresh(db_user)
 
     return db_user
+
+@app.post("/login")
+def login(
+    user: schemas.UserLogin,
+    db: Session = Depends(get_db)
+):
+    db_user = db.query(models.User).filter(
+        models.User.email == user.email
+    ).first()
+
+    if db_user is None:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    if not verify_password(
+        user.password,
+        db_user.hashed_password
+    ):
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid email or password"
+        )
+
+    return {
+        "message": "Login successful!"
+    }
 
 @app.post("/pantry-items")
 def create_pantry_item(
