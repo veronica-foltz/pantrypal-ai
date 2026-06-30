@@ -5,7 +5,7 @@ import models
 import schemas
 
 from database import engine, Base, get_db
-from security import hash_password, verify_password
+from security import hash_password, verify_password, create_access_token
 
 Base.metadata.create_all(bind=engine)
 
@@ -59,8 +59,13 @@ def login(
             detail="Invalid email or password"
         )
 
+    access_token = create_access_token(
+        data={"sub": db_user.email}
+    )
+
     return {
-        "message": "Login successful!"
+        "access_token": access_token,
+        "token_type": "bearer"
     }
 
 @app.post("/pantry-items")
