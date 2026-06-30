@@ -5,6 +5,7 @@ import models
 import schemas
 
 from database import engine, Base, get_db
+from security import hash_password
 
 Base.metadata.create_all(bind=engine)
 
@@ -25,7 +26,7 @@ def register_user(
     db_user = models.User(
         username=user.username,
         email=user.email,
-        hashed_password=user.password
+        hashed_password=hash_password(user.password)
     )
 
     db.add(db_user)
