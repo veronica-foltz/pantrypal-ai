@@ -5,7 +5,7 @@ import models
 import schemas
 
 from database import engine, Base, get_db
-from security import hash_password, verify_password, create_access_token
+from security import hash_password, verify_password, create_access_token, get_current_user
 
 Base.metadata.create_all(bind=engine)
 
@@ -35,7 +35,7 @@ def register_user(
 
     return db_user
 
-@app.post("/login")
+@app.post("/login", response_model=schemas.Token)
 def login(
     user: schemas.UserLogin,
     db: Session = Depends(get_db)
@@ -89,9 +89,13 @@ def create_pantry_item(
 
 @app.get("/pantry-items")
 def get_pantry_items(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
 ):
-    items = db.query(models.PantryItem).all()
+    items = db.query(models.PantryItem).filter(
+        models.PantryItem.user_id == current_user.id
+    ).all()
+
     return items
 
 @app.get("/pantry-items/{item_id}")
