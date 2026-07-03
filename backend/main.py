@@ -73,14 +73,15 @@ def login(
 @app.post("/pantry-items")
 def create_pantry_item(
     pantry_item: schemas.PantryItemCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
 ):
     db_item = models.PantryItem(
         name=pantry_item.name,
         quantity=pantry_item.quantity,
         category=pantry_item.category,
         expiration_date=pantry_item.expiration_date,
-        user_id=None
+        user_id=current_user.id
     )
 
     db.add(db_item)
