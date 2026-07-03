@@ -92,11 +92,15 @@ def create_pantry_item(
 
 @app.get("/pantry-items")
 def get_pantry_items(
+    search: str = "",
+    category: str = "",
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user)
 ):
     items = db.query(models.PantryItem).filter(
-        models.PantryItem.user_id == current_user.id
+        models.PantryItem.user_id == current_user.id,
+        models.PantryItem.name.contains(search),
+        models.PantryItem.category.contains(category)
     ).all()
 
     return items
