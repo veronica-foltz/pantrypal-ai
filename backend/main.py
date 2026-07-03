@@ -94,14 +94,24 @@ def create_pantry_item(
 def get_pantry_items(
     search: str = "",
     category: str = "",
+    sort_by: str = "name",
+    order: str = "asc",
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user)
 ):
-    items = db.query(models.PantryItem).filter(
+    query = db.query(models.PantryItem).filter(
         models.PantryItem.user_id == current_user.id,
         models.PantryItem.name.contains(search),
         models.PantryItem.category.contains(category)
-    ).all()
+    )
+
+    if sort_by == "name":
+        if order == "desc":
+            query = query.order_by(models.PantryItem.name.desc())
+        else:
+            query = query.order_by(models.PantryItem.name.asc())
+    
+    items = query.all()
 
     return items
 
