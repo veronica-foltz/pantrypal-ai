@@ -96,6 +96,8 @@ def get_pantry_items(
     category: str = "",
     sort_by: str = "name",
     order: str = "asc",
+    skip: int = 0,
+    limit: int = 10,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user)
 ):
@@ -117,7 +119,7 @@ def get_pantry_items(
         else:
             query = query.order_by(models.PantryItem.expiration_date.asc())
     
-    items = query.all()
+    items = query.offset(skip).limit(limit).all()
 
     return items
 
