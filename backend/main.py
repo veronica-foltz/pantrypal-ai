@@ -111,6 +111,12 @@ def get_pantry_items(
         else:
             query = query.order_by(models.PantryItem.name.asc())
     
+    if sort_by == "expiration_date":
+        if order == "desc":
+         query = query.order_by(models.PantryItem.expiration_date.desc())
+        else:
+            query = query.order_by(models.PantryItem.expiration_date.asc())
+    
     items = query.all()
 
     return items
