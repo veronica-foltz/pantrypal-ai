@@ -104,29 +104,33 @@ def get_pantry_items(
 @app.get("/pantry-items/{item_id}")
 def get_pantry_item(
     item_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
 ):
     item = db.query(models.PantryItem).filter(
-        models.PantryItem.id == item_id
+        models.PantryItem.id == item_id,
+        models.PantryItem.user_id == current_user.id
     ).first()
-    
+
     if item is None:
         raise HTTPException(status_code=404, detail="Pantry item not found")
-    
+
     return item
 
 @app.delete("/pantry-items/{item_id}")
 def delete_pantry_item(
     item_id: int,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
 ):
     item = db.query(models.PantryItem).filter(
-        models.PantryItem.id == item_id
+        models.PantryItem.id == item_id,
+        models.PantryItem.user_id == current_user.id
     ).first()
-    
+
     if item is None:
         raise HTTPException(status_code=404, detail="Pantry item not found")
-    
+
     db.delete(item)
     db.commit()
 
@@ -138,10 +142,12 @@ def delete_pantry_item(
 def update_pantry_item(
     item_id: int,
     updated_item: schemas.PantryItemCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
 ):
     item = db.query(models.PantryItem).filter(
-        models.PantryItem.id == item_id
+        models.PantryItem.id == item_id,
+        models.PantryItem.user_id == current_user.id
     ).first()
 
     if item is None:
