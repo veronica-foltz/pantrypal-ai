@@ -135,6 +135,23 @@ def get_pantry_items(
 
     return items
 
+@app.get("/pantry-items/expiring-soon")
+def get_expiring_soon_items(
+    days: int = 7,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    today = date.today()
+    end_date = today + timedelta(days=days)
+
+    items = db.query(models.PantryItem).filter(
+        models.PantryItem.user_id == current_user.id,
+        models.PantryItem.expiration_date >= today,
+        models.PantryItem.expiration_date <= end_date
+    ).order_by(models.PantryItem.expiration_date.asc()).all()
+
+    return items
+
 @app.get("/pantry-items/{item_id}")
 def get_pantry_item(
     item_id: int,
