@@ -9,6 +9,8 @@ import schemas
 from database import engine, Base, get_db
 from security import hash_password, verify_password, create_access_token, get_current_user
 
+from datetime import date, timedelta
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -106,6 +108,15 @@ def get_pantry_items(
         models.PantryItem.name.contains(search),
         models.PantryItem.category.contains(category)
     )
+
+    if expiring_days > 0:
+        today = date.today()
+        end_date = today + timedelta(days=expiring_days)
+
+        query = query.filter(
+            models.PantryItem.expiration_date >= today,
+            models.PantryItem.expiration_date <= end_date
+        )
 
     if sort_by == "name":
         if order == "desc":
