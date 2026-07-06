@@ -100,6 +100,7 @@ def get_pantry_items(
     order: str = "asc",
     skip: int = 0,
     limit: int = 10,
+    expiring_days: int = 0,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user)
 ):
