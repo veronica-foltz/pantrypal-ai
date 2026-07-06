@@ -246,26 +246,24 @@ def get_recipe_suggestions(
 
     suggestions = []
 
-    if "eggs" in ingredients and "bread" in ingredients:
-        suggestions.append({
-            "name": "French Toast",
-            "matched_ingredients": ["eggs", "bread"],
-            "missing_ingredients": ["milk", "cinnamon"]
-        })
+    for recipe in RECIPES:
+        required_ingredients = recipe["ingredients"]
+        matched_ingredients = [
+            ingredient for ingredient in required_ingredients
+            if ingredient in ingredients
+        ]
 
-    if "eggs" in ingredients:
-        suggestions.append({
-            "name": "Scrambled Eggs",
-            "matched_ingredients": ["eggs"],
-            "missing_ingredients": []
-        })
+        missing_ingredients = [
+            ingredient for ingredient in required_ingredients
+            if ingredient not in ingredients
+        ]
 
-    if "bread" in ingredients:
-        suggestions.append({
-            "name": "Toast",
-            "matched_ingredients": ["bread"],
-            "missing_ingredients": ["butter"]
-        })
+        if matched_ingredients:
+            suggestions.append({
+                "name": recipe["name"],
+                "matched_ingredients": matched_ingredients,
+                "missing_ingredients": missing_ingredients
+            })
 
     return {
         "pantry_items": ingredients,
