@@ -11,6 +11,25 @@ from security import hash_password, verify_password, create_access_token, get_cu
 
 from datetime import date, timedelta
 
+RECIPES = [
+    {
+        "name": "French Toast",
+        "ingredients": ["eggs", "bread", "milk", "cinnamon"]
+    },
+    {
+        "name": "Scrambled Eggs",
+        "ingredients": ["eggs"]
+    },
+    {
+        "name": "Toast",
+        "ingredients": ["bread", "butter"]
+    },
+    {
+        "name": "Apple Slices",
+        "ingredients": ["apples"]
+    }
+]
+
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -213,3 +232,42 @@ def update_pantry_item(
     db.refresh(item)
 
     return item
+
+@app.get("/recipes/suggestions")
+def get_recipe_suggestions(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    pantry_items = db.query(models.PantryItem).filter(
+        models.PantryItem.user_id == current_user.id
+    ).all()
+
+    ingredients = [item.name.lower() for item in pantry_items]
+
+    suggestions = []
+
+    if "eggs" in ingredients and "bread" in ingredients:
+        suggestions.append({
+            "name": "French Toast",
+            "matched_ingredients": ["eggs", "bread"],
+            "missing_ingredients": ["milk", "cinnamon"]
+        })
+
+    if "eggs" in ingredients:
+        suggestions.append({
+            "name": "Scrambled Eggs",
+            "matched_ingredients": ["eggs"],
+            "missing_ingredients": []
+        })
+
+    if "bread" in ingredients:
+        suggestions.append({
+            "name": "Toast",
+            "matched_ingredients": ["bread"],
+            "missing_ingredients": ["butter"]
+        })
+
+    return {
+        "pantry_items": ingredients,
+        "suggestions": suggestions
+    }
