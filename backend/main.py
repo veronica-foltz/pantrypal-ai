@@ -258,9 +258,15 @@ def get_recipe_suggestions(
             if ingredient not in ingredients
         ]
 
+        match_score = (
+            len(matched_ingredients) /
+            len(required_ingredients)
+        ) * 100
+
         if matched_ingredients:
             suggestions.append({
                 "name": recipe["name"],
+                "match_score": match_score,
                 "matched_ingredients": matched_ingredients,
                 "missing_ingredients": missing_ingredients
             })
