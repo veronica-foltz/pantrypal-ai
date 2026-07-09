@@ -266,13 +266,17 @@ def get_recipe_suggestions(
         if matched_ingredients:
             suggestions.append({
                 "name": recipe["name"],
+                "can_make": len(missing_ingredients) == 0,
                 "match_score": match_score,
                 "matched_ingredients": matched_ingredients,
                 "missing_ingredients": missing_ingredients
             })
 
     suggestions.sort(
-        key=lambda recipe: recipe["match_score"],
+        key=lambda recipe: (
+            recipe["match_score"],
+            recipe["match_score"]
+        ),
         reverse=True
     )
 
