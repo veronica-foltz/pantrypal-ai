@@ -271,6 +271,11 @@ def get_recipe_suggestions(
                 "missing_ingredients": missing_ingredients
             })
 
+    suggestions.sort(
+        key=lambda recipe: recipe["match_score"],
+        reverse=True
+    )
+
     return {
         "pantry_items": ingredients,
         "suggestions": suggestions
