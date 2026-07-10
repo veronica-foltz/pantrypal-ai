@@ -309,3 +309,47 @@ def generate_shopping_list(
         "pantry_items": ingredients,
         "shopping_list": shopping_list
     }
+
+@app.get("/dashboard")
+def get_dashboard(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    pantry_items = db.query(models.PantryItem).filter(
+        models.PantryItem.user_id == current_user.id
+    ).all()
+
+    total_items = len(pantry_items)
+
+    categories = {
+        item.category
+        for item in pantry_items
+        if item.category is not None
+    }
+
+    today = date.today()
+    end_date = today + timedelta(days=7)
+
+    expiring_soon = [
+        item for item in pantry_items
+        if item.expiration_date is not None
+        and today <= item.expiration_date <= end_date
+    ]
+
+    ingredients = [item.name.lower() for item in pantry_items]
+
+    recipes_available = 0
+
+    for recipe in RECIPES:
+        if all(
+            ingredient in ingredients
+            for ingredient in recipe["ingredients"]
+        ):
+            recipes_available += 1
+
+    return {
+        "total_items": total_items,
+        "total_categories": len(categories),
+        "expiring_soon": len(expiring_soon),
+        "recipes_available": recipes_available
+    }
