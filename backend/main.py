@@ -284,3 +284,28 @@ def get_recipe_suggestions(
         "pantry_items": ingredients,
         "suggestions": suggestions
     }
+
+@app.get("/shopping-list")
+def generate_shopping_list(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    pantry_items = db.query(models.PantryItem).filter(
+        models.PantryItem.user_id == current_user.id
+    ).all()
+
+    ingredients = [item.name.lower() for item in pantry_items]
+
+    shopping_list = []
+
+    for recipe in RECIPES:
+        for ingredient in recipe["ingredients"]:
+            if ingredient not in ingredients:
+                shopping_list.append(ingredient)
+    
+    shopping_list = list(set(shopping_list))
+
+    return {
+        "pantry_items": ingredients,
+        "shopping_list": shopping_list
+    }
