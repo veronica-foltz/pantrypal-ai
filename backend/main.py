@@ -353,3 +353,9 @@ def get_dashboard(
         "expiring_soon": len(expiring_soon),
         "recipes_available": recipes_available
     }
+
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy"
+    }
