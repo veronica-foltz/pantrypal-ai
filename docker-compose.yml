@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: veronica
+      POSTGRES_DB: pantrypal
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - pantrypal_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U veronica -d pantrypal"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql://veronica@db:5432/pantrypal
+      SECRET_KEY: PantryPalSuperSecretKey2026ChangeMeLater
+      ALGORITHM: HS256
+      ACCESS_TOKEN_EXPIRE_MINUTES: 30
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
