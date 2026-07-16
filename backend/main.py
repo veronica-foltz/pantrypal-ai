@@ -91,6 +91,36 @@ def login(
         "token_type": "bearer"
     }
 
+@app.post("/guest-login", response_model=schemas.Token)
+def guest_login(
+    db: Session = Depends(get_db)
+):
+    guest_email = "guest@pantrypal.demo"
+
+    guest_user = db.query(models.User).filter(
+        models.User.email == guest_email
+    ).first()
+
+    if guest_user is None:
+        guest_user = models.User(
+            username="Guest",
+            email=guest_email,
+            hashed_password=hash_password("guest-demo-password")
+        )
+
+        db.add(guest_user)
+        db.commit()
+        db.refresh(guest_user)
+
+    access_token = create_access_token(
+        data={"sub": guest_user.email}
+    )
+
+    return {
+        "access_token": access_token,
+        "token_type": "bearer"
+    }
+
 @app.post("/pantry-items")
 def create_pantry_item(
     pantry_item: schemas.PantryItemCreate,
