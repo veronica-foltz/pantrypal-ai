@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
@@ -8,6 +8,8 @@ function App() {
   );
 
   const [loginMessage, setLoginMessage] = useState("");
+  const [dashboard, setDashboard] = useState(null);
+  const [dashboardError, setDashboardError] = useState("");
 
   async function handleGuestLogin() {
     try {
@@ -34,6 +36,37 @@ function App() {
       setLoginMessage("Could not sign in as guest.");
     }
   }
+
+  async function fetchDashboard(activeToken) {
+    try {
+      setDashboardError("");
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/dashboard",
+        {
+          headers: {
+            Authorization: `Bearer ${activeToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Dashboard request failed");
+      }
+
+      const data = await response.json();
+      setDashboard(data);
+    } catch (error) {
+      console.error(error);
+      setDashboardError("Could not load dashboard data.");
+    }
+  }
+
+  useEffect(() => {
+    if (token) {
+      fetchDashboard(token);
+    }
+  }, [token]);
 
   return (
     <div className="app-shell">
@@ -63,6 +96,34 @@ function App() {
               <p className="login-message">{loginMessage}</p>
             )}
         </section>
+
+        {dashboard && (
+          <section className="stats-grid">
+            <div className="stat-card">
+              <strong>{dashboard.total_items}</strong>
+              <span>Pantry Items</span>
+            </div>
+
+            <div className="stat-card">
+              <strong>{dashboard.total_categories}</strong>
+              <span>Categories</span>
+            </div>
+
+            <div className="stat-card">
+              <strong>{dashboard.expiring_soon}</strong>
+              <span>Expiring Soon</span>
+            </div>
+
+            <div className="stat-card">
+              <strong>{dashboard.recipes_available}</strong>
+              <span>Recipes Ready</span>
+            </div>
+          </section>
+        )}
+
+        {dashboardError && (
+          <p className="error-message">{dashboardError}</p>
+        )}
 
         <section className="search-section">
           <input

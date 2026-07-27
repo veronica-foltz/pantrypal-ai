@@ -252,3 +252,33 @@ button {
   margin-top: 10px !important;
   font-size: 0.9rem;
 }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.stat-card {
+  display: grid;
+  gap: 4px;
+  border-radius: 18px;
+  background: white;
+  padding: 18px;
+  box-shadow: 0 10px 26px rgba(25, 77, 68, 0.07);
+}
+
+.stat-card strong {
+  color: #0d8f7a;
+  font-size: 1.7rem;
+}
+
+.stat-card span {
+  color: #71827e;
+  font-size: 0.88rem;
+}
+
+.error-message {
+  color: #b42318;
+  font-weight: 600;
+}
