@@ -1,6 +1,40 @@
+import { useState } from "react";
 import "./App.css";
 
 function App() {
+
+  const [token, setToken] = useState(
+    localStorage.getItem("access_token") || ""
+  );
+
+  const [loginMessage, setLoginMessage] = useState("");
+
+  async function handleGuestLogin() {
+    try {
+      setLoginMessage("Signing in as guest...");
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/guest-login",
+        {
+         method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Guest login failed");
+      }
+
+      const data = await response.json();
+
+      localStorage.setItem("access_token", data.access_token);
+      setToken(data.access_token);
+      setLoginMessage("Guest login successful!");
+    } catch (error) {
+     console.error(error);
+      setLoginMessage("Could not sign in as guest.");
+    }
+  }
+
   return (
     <div className="app-shell">
       <header className="top-header">
@@ -18,6 +52,16 @@ function App() {
         <section className="welcome-card">
           <p>Welcome back</p>
           <h2>What’s in your pantry today?</h2>
+            <button
+              className="guest-button"
+              onClick={handleGuestLogin}
+            >
+              Continue as Guest
+            </button>
+
+            {loginMessage && (
+              <p className="login-message">{loginMessage}</p>
+            )}
         </section>
 
         <section className="search-section">
