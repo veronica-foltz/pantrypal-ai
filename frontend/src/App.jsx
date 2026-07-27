@@ -52,9 +52,45 @@ function App() {
           </div>
         </section>
 
-      <section className="placeholder-card">
-        <h3>Categories</h3>
-        <p>Dairy, Produce, Bakery and more will appear here.</p>
+      <section className="categories-section">
+        <div className="section-header">
+          <h3>Categories</h3>
+          <button>See All</button>
+      </div>
+
+        <div className="category-grid">
+          <button className="category-card">
+            <span className="category-icon">🥛</span>
+            <span>
+              <strong>Dairy</strong>
+              <small>1 item</small>
+            </span>
+          </button>
+
+          <button className="category-card">
+            <span className="category-icon">🥬</span>
+            <span>
+              <strong>Produce</strong>
+              <small>1 item</small>
+            </span>
+          </button>
+
+          <button className="category-card">
+            <span className="category-icon">🍞</span>
+            <span>
+              <strong>Bakery</strong>
+              <small>1 item</small>
+            </span>
+          </button>
+
+          <button className="category-card">
+            <span className="category-icon">➕</span>
+            <span>
+              <strong>More</strong>
+              <small>View all</small>
+            </span>
+          </button>
+        </div>
       </section>
 
       </main>

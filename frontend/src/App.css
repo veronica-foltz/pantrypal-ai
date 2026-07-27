@@ -184,3 +184,51 @@ button {
   color: #0d8f7a;
   font-size: 0.85rem;
 }
+
+.categories-section {
+  background: white;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 12px 30px rgba(25, 77, 68, 0.08);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.category-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 0;
+  border-radius: 16px;
+  background: #f0faf7;
+  padding: 16px;
+  text-align: left;
+  color: #173b35;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  background: #e3f5f0;
+}
+
+.category-icon {
+  font-size: 1.7rem;
+}
+
+.category-card span:last-child {
+  display: grid;
+  gap: 3px;
+}
+
+.category-card strong {
+  font-size: 0.95rem;
+}
+
+.category-card small {
+  color: #71827e;
+}
