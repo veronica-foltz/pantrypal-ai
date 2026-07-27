@@ -123,3 +123,64 @@ button {
     transform: translateX(-50%);
   }
 }
+
+.search-section {
+  width: 100%;
+}
+
+.search-input {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-size: 1rem;
+}
+
+.expiring-card {
+  background: white;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 12px 30px rgba(25, 77, 68, 0.08);
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-header h3 {
+  margin: 0;
+}
+
+.section-header button {
+  background: none;
+  border: none;
+  color: #0d8f7a;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.expiring-items {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  margin-top: 18px;
+}
+
+.item-pill {
+  min-width: 130px;
+  background: #e8faf6;
+  border-radius: 16px;
+  padding: 14px;
+  font-weight: 600;
+}
+
+.item-pill span {
+  display: block;
+  margin-top: 8px;
+  color: #0d8f7a;
+  font-size: 0.85rem;
+}

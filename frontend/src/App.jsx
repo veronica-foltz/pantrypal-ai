@@ -20,10 +20,43 @@ function App() {
           <h2>What’s in your pantry today?</h2>
         </section>
 
-        <section className="placeholder-card">
-          <h3>Pantry overview</h3>
-          <p>Your pantry items will appear here.</p>
+        <section className="search-section">
+          <input
+            type="text"
+            placeholder="🔍 Search your pantry..."
+            className="search-input"
+          />
         </section>
+
+        <section className="expiring-card">
+          <div className="section-header">
+            <h3>Expiring Soon</h3>
+            <button>See All</button>
+          </div>
+
+          <div className="expiring-items">
+            <div className="item-pill">
+              🥚 Eggs
+            <span>2 days</span>
+          </div>
+
+            <div className="item-pill">
+              🍞 Bread
+            <span>3 days</span>
+          </div>
+
+          <div className="item-pill">
+              🍎 Apples
+            <span>5 days</span>
+          </div>
+          </div>
+        </section>
+
+      <section className="placeholder-card">
+        <h3>Categories</h3>
+        <p>Dairy, Produce, Bakery and more will appear here.</p>
+      </section>
+
       </main>
 
       <nav className="bottom-nav" aria-label="Main navigation">
