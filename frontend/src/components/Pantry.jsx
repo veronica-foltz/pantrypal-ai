@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export default function Pantry() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     async function fetchItems() {
@@ -44,7 +45,10 @@ export default function Pantry() {
     <div className="pantry-header">
         <h2>My Pantry</h2>
 
-        <button className="add-item-button">
+        <button
+            className="add-item-button"
+            onClick={() => setShowModal(true)}
+        >
             + Add Item
         </button>
     </div>
@@ -70,6 +74,24 @@ export default function Pantry() {
         </div>
       ))
     )}
+
+    {showModal && (
+        <div className="modal-overlay">
+            <div className="modal">
+                <h3>Add Pantry Item</h3>
+
+                <p>The form will go here next.</p>
+
+                <button
+                    className="close-button"
+                    onClick={() => setShowModal(false)}
+                >
+                    Close
+                </button>
+            </div>
+        </div>
+)}
+
   </div>
 );
 }
