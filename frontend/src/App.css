@@ -298,3 +298,25 @@ button {
 .pantry-card h3 {
   margin-bottom: 8px;
 }
+
+.pantry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-item-button {
+  background: #0d8f7a;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-item-button:hover {
+  background: #087663;
+}

@@ -41,7 +41,13 @@ export default function Pantry() {
 
   return (
   <div className="pantry-section">
-    <h2>My Pantry</h2>
+    <div className="pantry-header">
+        <h2>My Pantry</h2>
+
+        <button className="add-item-button">
+            + Add Item
+        </button>
+    </div>
 
     {items.length === 0 ? (
       <p>Your pantry is empty.</p>
