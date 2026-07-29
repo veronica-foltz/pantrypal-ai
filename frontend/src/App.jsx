@@ -223,10 +223,11 @@ function App() {
           <span>Shopping</span>
         </button>
       </nav>
+
+      <Pantry />
+      
     </div>
   );
 }
-
-<Pantry />
 
 export default App;

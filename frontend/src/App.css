@@ -282,3 +282,19 @@ button {
   color: #b42318;
   font-weight: 600;
 }
+
+.pantry-section {
+  margin-top: 30px;
+}
+
+.pantry-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+
+.pantry-card h3 {
+  margin-bottom: 8px;
+}

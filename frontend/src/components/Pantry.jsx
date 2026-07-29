@@ -19,7 +19,12 @@ export default function Pantry() {
         );
 
         const data = await response.json();
-        setItems(data);
+
+        setItems(
+            Array.isArray(data)
+                ? data
+                : data.items || []
+        );
       } catch (error) {
         console.error(error);
       } finally {
@@ -35,8 +40,30 @@ export default function Pantry() {
   }
 
   return (
-    <div>
-      <h2>My Pantry</h2>
-    </div>
-  );
+  <div className="pantry-section">
+    <h2>My Pantry</h2>
+
+    {items.length === 0 ? (
+      <p>Your pantry is empty.</p>
+    ) : (
+      items.map((item) => (
+        <div key={item.id} className="pantry-card">
+          <h3>{item.name}</h3>
+
+          <p>
+            <strong>Category:</strong> {item.category}
+          </p>
+
+          <p>
+            <strong>Quantity:</strong> {item.quantity}
+          </p>
+
+          <p>
+            <strong>Expires:</strong> {item.expiration_date}
+          </p>
+        </div>
+      ))
+    )}
+  </div>
+);
 }
