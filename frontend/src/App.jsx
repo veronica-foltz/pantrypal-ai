@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
+import Pantry from "./components/Pantry";
+
 function App() {
 
   const [token, setToken] = useState(
@@ -224,5 +226,7 @@ function App() {
     </div>
   );
 }
+
+<Pantry />
 
 export default App;
