@@ -5,6 +5,13 @@ export default function Pantry() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
+  const [newItem, setNewItem] = useState({
+    name: "",
+    category: "",
+    quantity: "",
+    expiration_date: "",
+  });
+
   useEffect(() => {
     async function fetchItems() {
       try {
@@ -80,7 +87,52 @@ export default function Pantry() {
             <div className="modal">
                 <h3>Add Pantry Item</h3>
 
-                <p>The form will go here next.</p>
+                <div className="form-group">
+                  <label>Item Name</label>
+                  <input
+                    type="text"
+                    value={newItem.name}
+                    onChange={(e) =>
+                      setNewItem({ ...newItem, name: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Category</label>
+                  <input
+                    type="text"
+                    value={newItem.category}
+                    onChange={(e) =>
+                      setNewItem({ ...newItem, category: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Quantity</label>
+                  <input
+                    type="number"
+                    value={newItem.quantity}
+                    onChange={(e) =>
+                      setNewItem({ ...newItem, quantity: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div className="form-group">
+  <label>Expiration Date</label>
+  <input
+    type="date"
+    value={newItem.expiration_date}
+    onChange={(e) =>
+      setNewItem({
+        ...newItem,
+        expiration_date: e.target.value,
+      })
+    }
+  />
+              </div>
 
                 <button
                     className="close-button"
