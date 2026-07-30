@@ -43,6 +43,51 @@ export default function Pantry() {
     fetchItems();
   }, []);
 
+  async function handleAddItem() {
+  try {
+    const token = localStorage.getItem("access_token");
+
+    const response = await fetch(
+      "http://127.0.0.1:8000/pantry-items",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: newItem.name,
+          category: newItem.category,
+          quantity: Number(newItem.quantity),
+          expiration_date: newItem.expiration_date,
+        }),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Could not add pantry item");
+    }
+
+    const createdItem = await response.json();
+
+    setItems((currentItems) => [
+      ...currentItems,
+      createdItem,
+    ]);
+
+    setNewItem({
+      name: "",
+      category: "",
+      quantity: "",
+      expiration_date: "",
+    });
+
+    setShowModal(false);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
   if (loading) {
     return <p>Loading pantry...</p>;
   }
@@ -138,6 +183,7 @@ export default function Pantry() {
                   <button
                     className="save-button"
                     type="button"
+                    onClick={handleAddItem}
                   >
                     Save
                   </button>
