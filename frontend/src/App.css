@@ -441,3 +441,13 @@ button {
 .save-button:hover {
   background: #087663;
 }
+
+.form-error {
+  margin-top: 16px;
+  color: #b42318;
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 0.9rem;
+}

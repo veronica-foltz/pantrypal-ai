@@ -4,6 +4,7 @@ export default function Pantry() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [newItem, setNewItem] = useState({
     name: "",
@@ -44,6 +45,7 @@ export default function Pantry() {
   }, []);
 
   async function handleAddItem() {
+    setErrorMessage("");
   try {
     const token = localStorage.getItem("access_token");
 
@@ -85,6 +87,9 @@ export default function Pantry() {
     setShowModal(false);
   } catch (error) {
     console.error(error);
+    setErrorMessage(
+      "Unable to save your pantry item. Please try again."
+    );
   }
 }
 
@@ -178,6 +183,12 @@ export default function Pantry() {
     }
   />
               </div>
+
+                {errorMessage && (
+                  <p className="form-error">
+                    {errorMessage}
+                  </p>
+                )}
 
                 <div className="modal-actions">
                   <button
