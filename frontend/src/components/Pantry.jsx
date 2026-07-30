@@ -134,12 +134,22 @@ export default function Pantry() {
   />
               </div>
 
-                <button
+                <div className="modal-actions">
+                  <button
+                    className="save-button"
+                    type="button"
+                  >
+                    Save
+                  </button>
+
+                  <button
                     className="close-button"
+                    type="button"
                     onClick={() => setShowModal(false)}
-                >
-                    Close
-                </button>
+                  >
+                    Cancel
+                  </button>
+                </div>
             </div>
         </div>
 )}
