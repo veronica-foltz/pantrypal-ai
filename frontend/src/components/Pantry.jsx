@@ -5,6 +5,7 @@ export default function Pantry() {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [editingItem, setEditingItem] = useState(null);
 
   const [newItem, setNewItem] = useState({
     name: "",
@@ -114,6 +115,7 @@ export default function Pantry() {
       <p>Your pantry is empty.</p>
     ) : (
       items.map((item) => (
+
         <div key={item.id} className="pantry-card">
           <h3>{item.name}</h3>
 
@@ -128,6 +130,24 @@ export default function Pantry() {
           <p>
             <strong>Expires:</strong> {item.expiration_date}
           </p>
+
+                  <button
+          className="edit-button"
+          onClick={() => {
+            setEditingItem(item);
+
+            setNewItem({
+              name: item.name,
+              category: item.category,
+              quantity: item.quantity,
+              expiration_date: item.expiration_date,
+            });
+
+            setShowModal(true);
+            }}
+          >
+          ✏️ Edit
+          </button>
         </div>
       ))
     )}
