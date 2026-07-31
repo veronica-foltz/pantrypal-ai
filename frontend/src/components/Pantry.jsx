@@ -50,33 +50,44 @@ export default function Pantry() {
   try {
     const token = localStorage.getItem("access_token");
 
-    const response = await fetch(
-      "http://127.0.0.1:8000/pantry-items",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name: newItem.name,
-          category: newItem.category,
-          quantity: Number(newItem.quantity),
-          expiration_date: newItem.expiration_date,
-        }),
-      }
-    );
+    const url = editingItem
+    ? `http://127.0.0.1:8000/pantry-items/${editingItem.id}`
+    : "http://127.0.0.1:8000/pantry-items";
+
+    const method = editingItem ? "PUT" : "POST";
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        name: newItem.name,
+        category: newItem.category,
+        quantity: Number(newItem.quantity),
+        expiration_date: newItem.expiration_date,
+      }),
+    });
 
     if (!response.ok) {
       throw new Error("Could not add pantry item");
     }
 
-    const createdItem = await response.json();
+    const savedItem = await response.json();
 
-    setItems((currentItems) => [
-      ...currentItems,
-      createdItem,
-    ]);
+    if (editingItem) {
+      setItems((currentItems) =>
+        currentItems.map((item) =>
+          item.id === savedItem.id ? savedItem : item
+        )
+      );
+    } else {
+      setItems((currentItems) => [
+        ...currentItems,
+        savedItem,
+      ]);
+    }
 
     setNewItem({
       name: "",
@@ -85,6 +96,7 @@ export default function Pantry() {
       expiration_date: "",
     });
 
+    setEditingItem(null);
     setShowModal(false);
   } catch (error) {
     console.error(error);
@@ -105,7 +117,19 @@ export default function Pantry() {
 
         <button
             className="add-item-button"
-            onClick={() => setShowModal(true)}
+            onClick={() => {
+              setEditingItem(null);
+
+              setNewItem({
+                name: "",
+                category: "",
+                quantity: "",
+                expiration_date: "",
+              });
+
+  setErrorMessage("");
+  setShowModal(true);
+}}
         >
             + Add Item
         </button>
@@ -155,8 +179,10 @@ export default function Pantry() {
     {showModal && (
         <div className="modal-overlay">
             <div className="modal">
-                <h3>Add Pantry Item</h3>
-
+                <h3>
+                  {editingItem ? "Edit Pantry Item" : "Add Pantry Item"}
+                </h3>
+                
                 <div className="form-group">
                   <label>Item Name</label>
                   <input
@@ -222,7 +248,11 @@ export default function Pantry() {
                   <button
                     className="close-button"
                     type="button"
-                    onClick={() => setShowModal(false)}
+                    onClick={() => {
+                      setEditingItem(null);
+                      setErrorMessage("");
+                      setShowModal(false);
+                    }}
                   >
                     Cancel
                   </button>
