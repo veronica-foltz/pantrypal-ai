@@ -12,6 +12,7 @@ function App() {
   const [loginMessage, setLoginMessage] = useState("");
   const [dashboard, setDashboard] = useState(null);
   const [dashboardError, setDashboardError] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   async function handleGuestLogin() {
     try {
@@ -132,6 +133,8 @@ function App() {
             type="text"
             placeholder="🔍 Search your pantry..."
             className="search-input"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </section>
 
@@ -224,7 +227,7 @@ function App() {
         </button>
       </nav>
 
-      <Pantry />
+      <Pantry searchTerm={searchTerm} />
       
     </div>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Pantry() {
+export default function Pantry({ searchTerm }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -15,13 +15,21 @@ export default function Pantry() {
     expiration_date: "",
   });
 
+  <input
+  type="text"
+  className="search-input"
+  placeholder="Search pantry items..."
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+/>
+
   useEffect(() => {
     async function fetchItems() {
       try {
         const token = localStorage.getItem("access_token");
 
         const response = await fetch(
-          "http://127.0.0.1:8000/items",
+          "http://127.0.0.1:8000/pantry-items",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -29,12 +37,18 @@ export default function Pantry() {
           }
         );
 
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Pantry fetch failed:", response.status, errorData);
+          throw new Error("Could not load pantry items");
+        }
+
         const data = await response.json();
 
         setItems(
-            Array.isArray(data)
-                ? data
-                : data.items || []
+          Array.isArray(data)
+            ? data
+            : data.items || []
         );
       } catch (error) {
         console.error(error);
@@ -43,8 +57,8 @@ export default function Pantry() {
       }
     }
 
-    fetchItems();
-  }, []);
+  fetchItems();
+}, []);
 
   async function handleAddItem() {
     setErrorMessage("");
@@ -136,6 +150,10 @@ async function handleDeleteItem(itemId) {
   }
 }
 
+const filteredItems = items.filter((item) =>
+  item.name.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
   return (
   <div className="pantry-section">
     <div className="pantry-header">
@@ -161,10 +179,10 @@ async function handleDeleteItem(itemId) {
         </button>
     </div>
 
-    {items.length === 0 ? (
+    {filteredItems.length === 0 ? (
       <p>Your pantry is empty.</p>
     ) : (
-      items.map((item) => (
+      filteredItems.map((item) => (
 
         <div key={item.id} className="pantry-card">
           <h3>{item.name}</h3>
