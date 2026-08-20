@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Pantry({ searchTerm }) {
+export default function Pantry({ searchTerm, selectedCategory, }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -150,9 +150,17 @@ async function handleDeleteItem(itemId) {
   }
 }
 
-const filteredItems = items.filter((item) =>
-  item.name.toLowerCase().includes(searchTerm.toLowerCase())
-);
+const filteredItems = items.filter((item) => {
+  const matchesSearch = item.name
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase());
+
+  const matchesCategory =
+    selectedCategory === "" ||
+    item.category === selectedCategory;
+
+  return matchesSearch && matchesCategory;
+});
 
   return (
   <div className="pantry-section">

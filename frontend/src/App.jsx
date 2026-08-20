@@ -13,6 +13,7 @@ function App() {
   const [dashboard, setDashboard] = useState(null);
   const [dashboardError, setDashboardError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   async function handleGuestLogin() {
     try {
@@ -169,7 +170,9 @@ function App() {
       </div>
 
         <div className="category-grid">
-          <button className="category-card">
+          <button className="category-card"
+            onClick={() => setSelectedCategory("Dairy")}
+          >
             <span className="category-icon">🥛</span>
             <span>
               <strong>Dairy</strong>
@@ -177,7 +180,9 @@ function App() {
             </span>
           </button>
 
-          <button className="category-card">
+          <button className="category-card"
+            onClick={() => setSelectedCategory("Produce")}
+          >
             <span className="category-icon">🥬</span>
             <span>
               <strong>Produce</strong>
@@ -185,7 +190,9 @@ function App() {
             </span>
           </button>
 
-          <button className="category-card">
+          <button className="category-card"
+            onClick={() => setSelectedCategory("Bakery")}
+          >
             <span className="category-icon">🍞</span>
             <span>
               <strong>Bakery</strong>
@@ -193,7 +200,9 @@ function App() {
             </span>
           </button>
 
-          <button className="category-card">
+          <button className="category-card"
+            onClick={() => setSelectedCategory("")}
+          >
             <span className="category-icon">➕</span>
             <span>
               <strong>More</strong>
@@ -227,7 +236,10 @@ function App() {
         </button>
       </nav>
 
-      <Pantry searchTerm={searchTerm} />
+      <Pantry 
+        searchTerm={searchTerm} 
+        selectedCategory={selectedCategory}
+      />
       
     </div>
   );
