@@ -109,6 +109,31 @@ export default function Pantry() {
   if (loading) {
     return <p>Loading pantry...</p>;
   }
+async function handleDeleteItem(itemId) {
+  try {
+    const token = localStorage.getItem("access_token");
+
+    const response = await fetch(
+      `http://127.0.0.1:8000/pantry-items/${itemId}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Could not delete pantry item");
+    }
+
+    setItems((currentItems) =>
+      currentItems.filter((item) => item.id !== itemId)
+    );
+  } catch (error) {
+    console.error(error);
+  }
+}
 
   return (
   <div className="pantry-section">
@@ -171,6 +196,13 @@ export default function Pantry() {
             }}
           >
           ✏️ Edit
+          </button>
+
+          <button
+            className="delete-button"
+            onClick={() => handleDeleteItem(item.id)}
+          >
+            🗑️ Delete
           </button>
         </div>
       ))
