@@ -6,6 +6,7 @@ export default function Pantry() {
   const [showModal, setShowModal] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [editingItem, setEditingItem] = useState(null);
+  const [itemToDelete, setItemToDelete] = useState(null);
 
   const [newItem, setNewItem] = useState({
     name: "",
@@ -200,7 +201,7 @@ async function handleDeleteItem(itemId) {
 
           <button
             className="delete-button"
-            onClick={() => handleDeleteItem(item.id)}
+            onClick={() => setItemToDelete(item)}
           >
             🗑️ Delete
           </button>
@@ -292,7 +293,37 @@ async function handleDeleteItem(itemId) {
             </div>
         </div>
 )}
+{itemToDelete && (
+  <div className="modal-overlay">
+    <div className="modal">
+      <h3>Delete Pantry Item?</h3>
 
+      <p>
+        Are you sure you want to delete{" "}
+        <strong>{itemToDelete.name}</strong>?
+      </p>
+
+      <div className="modal-actions">
+        <button
+          className="delete-confirm-button"
+          onClick={() => {
+            handleDeleteItem(itemToDelete.id);
+            setItemToDelete(null);
+          }}
+        >
+          Delete
+        </button>
+
+        <button
+          className="close-button"
+          onClick={() => setItemToDelete(null)}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
   </div>
 );
 }

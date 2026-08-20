@@ -482,3 +482,20 @@ button {
 .delete-button:hover {
   background: #fef3f2;
 }
+
+.delete-confirm-button {
+  height: 42px;
+  min-width: 88px;
+  padding: 0 18px;
+  background: #b42318;
+  color: white;
+  border: 1px solid #b42318;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-confirm-button:hover {
+  background: #8f1c13;
+}
