@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Pantry({ searchTerm, selectedCategory, }) {
+export default function Pantry({ searchTerm, selectedCategory,onItemsChange,}) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -59,6 +59,10 @@ export default function Pantry({ searchTerm, selectedCategory, }) {
 
   fetchItems();
 }, []);
+
+  useEffect(() => {
+    onItemsChange(items);
+  }, [items, onItemsChange]);
 
   async function handleAddItem() {
     setErrorMessage("");

@@ -14,6 +14,7 @@ function App() {
   const [dashboardError, setDashboardError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [pantryItems, setPantryItems] = useState([]);
 
   async function handleGuestLogin() {
     try {
@@ -178,7 +179,9 @@ function App() {
             <span className="category-icon">🥛</span>
             <span>
               <strong>Dairy</strong>
-              <small>1 item</small>
+              <small>
+                {pantryItems.filter((item) => item.category === "Dairy").length} items
+              </small>
             </span>
           </button>
 
@@ -190,7 +193,9 @@ function App() {
             <span className="category-icon">🥬</span>
             <span>
               <strong>Produce</strong>
-              <small>1 item</small>
+              <small>
+                {pantryItems.filter((item) => item.category === "Produce").length} items
+              </small>
             </span>
           </button>
 
@@ -202,7 +207,9 @@ function App() {
             <span className="category-icon">🍞</span>
             <span>
               <strong>Bakery</strong>
-              <small>1 item</small>
+              <small>
+                {pantryItems.filter((item) => item.category === "Bakery").length} items
+              </small>
             </span>
           </button>
 
@@ -247,6 +254,7 @@ function App() {
       <Pantry 
         searchTerm={searchTerm} 
         selectedCategory={selectedCategory}
+        onItemsChange={setPantryItems}
       />
       
     </div>
