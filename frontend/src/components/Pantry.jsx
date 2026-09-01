@@ -7,6 +7,7 @@ export default function Pantry({ searchTerm, selectedCategory,onItemsChange,}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [editingItem, setEditingItem] = useState(null);
   const [itemToDelete, setItemToDelete] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
   const [newItem, setNewItem] = useState({
     name: "",
@@ -22,6 +23,12 @@ export default function Pantry({ searchTerm, selectedCategory,onItemsChange,}) {
   value={searchTerm}
   onChange={(e) => setSearchTerm(e.target.value)}
 />
+
+  {successMessage && (
+    <p className="success-message">
+      {successMessage}
+    </p>
+  )}
 
   useEffect(() => {
     async function fetchItems() {
@@ -115,6 +122,12 @@ export default function Pantry({ searchTerm, selectedCategory,onItemsChange,}) {
       expiration_date: "",
     });
 
+    setSuccessMessage(
+      editingItem
+        ? "Pantry item updated successfully."
+        : "Pantry item added successfully."
+    );
+
     setEditingItem(null);
     setShowModal(false);
   } catch (error) {
@@ -149,6 +162,9 @@ async function handleDeleteItem(itemId) {
     setItems((currentItems) =>
       currentItems.filter((item) => item.id !== itemId)
     );
+
+    setSuccessMessage("Pantry item deleted successfully.");
+
   } catch (error) {
     console.error(error);
   }

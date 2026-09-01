@@ -508,3 +508,14 @@ button {
 .active-category strong {
   color: #0d8f7a;
 }
+
+.success-message {
+  margin: 12px 0 18px;
+  padding: 12px 14px;
+  background: #ecfdf3;
+  border: 1px solid #abefc6;
+  color: #067647;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
