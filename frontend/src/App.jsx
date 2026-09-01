@@ -170,7 +170,9 @@ function App() {
       </div>
 
         <div className="category-grid">
-          <button className="category-card"
+          <button className={`category-card ${
+                    selectedCategory === "Dairy" ? "active-category" : ""
+                  }`}
             onClick={() => setSelectedCategory("Dairy")}
           >
             <span className="category-icon">🥛</span>
@@ -180,7 +182,9 @@ function App() {
             </span>
           </button>
 
-          <button className="category-card"
+          <button className={`category-card ${
+                    selectedCategory === "Produce" ? "active-category" : ""
+                  }`}
             onClick={() => setSelectedCategory("Produce")}
           >
             <span className="category-icon">🥬</span>
@@ -190,7 +194,9 @@ function App() {
             </span>
           </button>
 
-          <button className="category-card"
+          <button className={`category-card ${
+                    selectedCategory === "Bakery" ? "active-category" : ""
+                  }`}
             onClick={() => setSelectedCategory("Bakery")}
           >
             <span className="category-icon">🍞</span>
@@ -200,7 +206,9 @@ function App() {
             </span>
           </button>
 
-          <button className="category-card"
+          <button className={`category-card ${
+                    selectedCategory === "" ? "active-category" : ""
+                  }`}
             onClick={() => setSelectedCategory("")}
           >
             <span className="category-icon">➕</span>

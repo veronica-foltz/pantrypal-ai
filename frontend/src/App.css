@@ -499,3 +499,12 @@ button {
 .delete-confirm-button:hover {
   background: #8f1c13;
 }
+
+.active-category {
+  background: #d9f5ee;
+  border: 2px solid #0d8f7a;
+}
+
+.active-category strong {
+  color: #0d8f7a;
+}
