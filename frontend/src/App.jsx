@@ -167,7 +167,9 @@ function App() {
       <section className="categories-section">
         <div className="section-header">
           <h3>Categories</h3>
-          <button>See All</button>
+          <button onClick={() => setSelectedCategory("")}>
+            See All
+          </button>
       </div>
 
         <div className="category-grid">
@@ -180,7 +182,10 @@ function App() {
             <span>
               <strong>Dairy</strong>
               <small>
-                {pantryItems.filter((item) => item.category === "Dairy").length} items
+                {pantryItems.filter((item) => item.category === "Dairy").length}{" "}
+                {pantryItems.filter((item) => item.category === "Dairy").length === 1
+                  ? "item"
+                  : "items"}
               </small>
             </span>
           </button>
@@ -194,7 +199,10 @@ function App() {
             <span>
               <strong>Produce</strong>
               <small>
-                {pantryItems.filter((item) => item.category === "Produce").length} items
+                {pantryItems.filter((item) => item.category === "Produce").length}{" "}
+                {pantryItems.filter((item) => item.category === "Produce").length === 1
+                  ? "item"
+                  : "items"}
               </small>
             </span>
           </button>
@@ -208,7 +216,10 @@ function App() {
             <span>
               <strong>Bakery</strong>
               <small>
-                {pantryItems.filter((item) => item.category === "Bakery").length} items
+                {pantryItems.filter((item) => item.category === "Bakery").length}{" "}
+                {pantryItems.filter((item) => item.category === "Bakery").length === 1
+                  ? "item"
+                  : "items"}
               </small>
             </span>
           </button>
