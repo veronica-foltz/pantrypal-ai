@@ -527,3 +527,38 @@ button {
   font-size: 0.9rem;
   font-weight: 600;
 }
+
+.recipe-grid {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.recipe-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: white;
+  padding: 18px;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.recipe-icon {
+  font-size: 2rem;
+}
+
+.recipe-card h3 {
+  margin: 0 0 6px;
+}
+
+.recipe-card p {
+  margin: 0 0 8px;
+  color: #6b7d78;
+}
+
+.recipe-card span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #0d8f7a;
+}

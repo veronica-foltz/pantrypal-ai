@@ -8,20 +8,34 @@ function Recipes() {
         </div>
       </div>
 
-      <div className="recipe-empty-state">
-        <span className="recipe-empty-icon">🍳</span>
+      <div className="recipe-grid">
+        <article className="recipe-card">
+            <div className="recipe-icon">🍳</div>
+            <div>
+                <h3>Veggie Egg Scramble</h3>
+                <p>Eggs, produce, and pantry staples.</p>
+                <span>15 min</span>
+            </div>
+        </article>
 
-        <h3>Find something delicious</h3>
+        <article className="recipe-card">
+            <div className="recipe-icon">🥪</div>
+            <div>
+                <h3>Toasted Pantry Sandwich</h3>
+                <p>Bread, cheese, and whatever extras you have.</p>
+                <span>10 min</span>
+            </div>
+        </article>
 
-        <p>
-          PantryPal can suggest recipes based on the ingredients
-          already in your pantry.
-        </p>
-
-        <button className="recipe-generate-button">
-          ✨ Find Recipes
-        </button>
-      </div>
+        <article className="recipe-card">
+            <div className="recipe-icon">🍝</div>
+            <div>
+                <h3>Quick Pantry Pasta</h3>
+                <p>Simple ingredients turned into an easy dinner.</p>
+                <span>25 min</span>
+            </div>
+        </article>
+        </div>
     </section>
   );
 }
