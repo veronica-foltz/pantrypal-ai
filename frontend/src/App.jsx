@@ -17,6 +17,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [pantryItems, setPantryItems] = useState([]);
+  const [activePage, setActivePage] = useState("home");
 
   async function handleGuestLogin() {
     try {
@@ -89,6 +90,9 @@ function App() {
       </header>
 
       <main className="app-content">
+        
+        {activePage === "home" && (
+          <>
         <section className="welcome-card">
           <p>Welcome back</p>
           <h2>What’s in your pantry today?</h2>
@@ -240,10 +244,26 @@ function App() {
         </div>
       </section>
 
+          <Pantry 
+            searchTerm={searchTerm} 
+            selectedCategory={selectedCategory}
+            onItemsChange={setPantryItems}
+          />
+
+              </>
+          )}
+
+          {activePage === "recipes" && (
+            <Recipes />
+          )}
+
       </main>
 
       <nav className="bottom-nav" aria-label="Main navigation">
-        <button className="nav-item active">
+        <button
+          className="nav-item"
+          onClick={() => setActivePage("home")}
+        >
           <span className="nav-icon">⌂</span>
           <span>Home</span>
         </button>
@@ -253,7 +273,10 @@ function App() {
           <span>Pantry</span>
         </button>
 
-        <button className="nav-item">
+        <button
+          className="nav-item"
+          onClick={() => setActivePage("recipes")}
+        >
           <span className="nav-icon">♨</span>
           <span>Recipes</span>
         </button>
@@ -263,12 +286,6 @@ function App() {
           <span>Shopping</span>
         </button>
       </nav>
-
-      <Pantry 
-        searchTerm={searchTerm} 
-        selectedCategory={selectedCategory}
-        onItemsChange={setPantryItems}
-      />
       
     </div>
   );
