@@ -562,3 +562,33 @@ button {
   font-weight: 600;
   color: #0d8f7a;
 }
+
+.recipe-card-content {
+  width: 100%;
+}
+
+.recipe-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.recipe-status {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.recipe-status.ready {
+  background: #ecfdf3;
+  color: #067647;
+}
+
+.recipe-status.missing {
+  background: #fff7ed;
+  color: #b54708;
+}

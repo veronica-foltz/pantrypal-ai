@@ -62,21 +62,36 @@ function Recipes() {
             {recipes.map((recipe, index) => (
                 <article
                     className="recipe-card"
-                    key={recipe.id || index}
+                    key={recipe.name}
                 >
                     <div className="recipe-icon">🍳</div>
 
-                    <div>
-                        <h3>{recipe.name || recipe.title}</h3>
+                    <div className="recipe-card-content">
+                        <div className="recipe-card-header">
+                            <h3>{recipe.name}</h3>
 
-                    <p>
-                        {recipe.description ||
-                            "A recipe based on ingredients in your pantry."}
-                    </p>
+                            <span
+                                className={
+                                    recipe.can_make
+                                        ? "recipe-status ready"
+                                        : "recipe-status missing"
+                                }
+                            >
+                                {recipe.can_make ? "Ready to make" : `${recipe.match_score}% match`}
+                            </span>
+                        </div>
 
-                    {recipe.cook_time && (
-                        <span>{recipe.cook_time}</span>
-                    )}
+                        <p>
+                            <strong>Have:</strong>{" "}
+                            {recipe.matched_ingredients.join(", ") || "None"}
+                        </p>
+
+                        {!recipe.can_make && (
+                            <p>
+                                <strong>Missing:</strong>{" "}
+                                {recipe.missing_ingredients.join(", ")}
+                            </p>
+                        )}
                     </div>
                 </article>
             ))}
