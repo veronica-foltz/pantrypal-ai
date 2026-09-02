@@ -1,4 +1,47 @@
+import { useEffect, useState } from "react";
+
 function Recipes() {
+
+    const [recipes, setRecipes] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [errorMessage, setErrorMessage] = useState("");
+
+    useEffect(() => {
+        async function fetchRecipes() {
+            try {
+                const token = localStorage.getItem("access_token");
+
+                const response = await fetch(
+                    "http://127.0.0.1:8000/recipes/suggestions",
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
+
+                if (!response.ok) {
+                    throw new Error("Could not load recipe suggestions");
+                }
+
+                const data = await response.json();
+
+                setRecipes(
+                    Array.isArray(data)
+                        ? data
+                        : data.recipes || data.suggestions || []
+                    );
+                } catch (error) {
+                    console.error(error);
+                    setErrorMessage("Could not load recipe suggestions.");
+                } finally {
+                    setLoading(false);
+                }
+            }
+
+            fetchRecipes();
+        }, []);
+
   return (
     <section className="recipes-page">
       <div className="recipes-header">
@@ -8,34 +51,37 @@ function Recipes() {
         </div>
       </div>
 
-      <div className="recipe-grid">
-        <article className="recipe-card">
-            <div className="recipe-icon">🍳</div>
-            <div>
-                <h3>Veggie Egg Scramble</h3>
-                <p>Eggs, produce, and pantry staples.</p>
-                <span>15 min</span>
-            </div>
-        </article>
+    {loading ? (
+        <p>Loading recipe ideas...</p>
+    ) : errorMessage ? (
+        <p className="error-message">{errorMessage}</p>
+    ) : recipes.length === 0 ? (
+        <p>No recipe suggestions yet.</p>
+    ) : (
+        <div className="recipe-grid">
+            {recipes.map((recipe, index) => (
+                <article
+                    className="recipe-card"
+                    key={recipe.id || index}
+                >
+                    <div className="recipe-icon">🍳</div>
 
-        <article className="recipe-card">
-            <div className="recipe-icon">🥪</div>
-            <div>
-                <h3>Toasted Pantry Sandwich</h3>
-                <p>Bread, cheese, and whatever extras you have.</p>
-                <span>10 min</span>
-            </div>
-        </article>
+                    <div>
+                        <h3>{recipe.name || recipe.title}</h3>
 
-        <article className="recipe-card">
-            <div className="recipe-icon">🍝</div>
-            <div>
-                <h3>Quick Pantry Pasta</h3>
-                <p>Simple ingredients turned into an easy dinner.</p>
-                <span>25 min</span>
-            </div>
-        </article>
+                    <p>
+                        {recipe.description ||
+                            "A recipe based on ingredients in your pantry."}
+                    </p>
+
+                    {recipe.cook_time && (
+                        <span>{recipe.cook_time}</span>
+                    )}
+                    </div>
+                </article>
+            ))}
         </div>
+        )}
     </section>
   );
 }
