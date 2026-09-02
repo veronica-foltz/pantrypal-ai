@@ -3,6 +3,8 @@ import "./App.css";
 
 import Pantry from "./components/Pantry";
 
+import Recipes from "./components/Recipes";
+
 function App() {
 
   const [token, setToken] = useState(
