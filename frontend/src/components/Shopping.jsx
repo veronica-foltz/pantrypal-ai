@@ -49,6 +49,16 @@ function Shopping() {
                 : [...currentItems, index]
         );
     }
+
+    function clearCompleted() {
+        setShoppingItems((currentItems) =>
+            currentItems.filter(
+                (_, index) => !checkedItems.includes(index)
+            )
+        );
+
+        setCheckedItems([]);
+    }
   
   
     return (
@@ -60,6 +70,8 @@ function Shopping() {
         </div>
       </div>
 
+
+
         {loading ? (
             <p>Loading shopping list...</p>
         ) : errorMessage ? (
@@ -67,6 +79,16 @@ function Shopping() {
         ) : shoppingItems.length === 0 ? (
             <p>Your shopping list is empty.</p>
         ) : (
+        <>
+            {checkedItems.length > 0 && (
+                <button
+                    className="clear-completed-button"
+                    onClick={clearCompleted}
+                >
+                    Clear completed
+                </button>
+            )}
+
             <div className="shopping-list">
                 {shoppingItems.map((item, index) => (
                     <button
@@ -86,6 +108,7 @@ function Shopping() {
                     </button>
                 ))}
             </div>
+        </>
         )}
     </section>
   );
