@@ -610,11 +610,21 @@ button {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
-.shopping-item::before {
-  content: "";
+.shopping-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 18px;
   height: 18px;
   border: 2px solid #1b9b86;
   border-radius: 5px;
   flex-shrink: 0;
+}
+
+.shopping-item.checked {
+  opacity: 0.6;
+}
+
+.shopping-item.checked > span:last-child {
+  text-decoration: line-through;
 }

@@ -4,6 +4,7 @@ function Shopping() {
   const [shoppingItems, setShoppingItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
+  const [checkedItems, setCheckedItems] = useState([]);
 
     useEffect(() => {
     async function fetchShoppingList() {
@@ -40,6 +41,14 @@ function Shopping() {
 
     fetchShoppingList();
   }, []);
+
+    function toggleItem(index) {
+        setCheckedItems((currentItems) =>
+            currentItems.includes(index)
+                ? currentItems.filter((itemIndex) => itemIndex !== index)
+                : [...currentItems, index]
+        );
+    }
   
   
     return (
@@ -60,9 +69,21 @@ function Shopping() {
         ) : (
             <div className="shopping-list">
                 {shoppingItems.map((item, index) => (
-                    <div className="shopping-item" key={index}>
-                        {typeof item === "string" ? item : item.name}
-                    </div>
+                    <button
+                        className={`shopping-item ${
+                            checkedItems.includes(index) ? "checked" : ""
+                        }`}
+                        key={index}
+                        onClick={() => toggleItem(index)}
+                    >
+                        <span className="shopping-checkbox">
+                            {checkedItems.includes(index) ? "✓" : ""}
+                        </span>
+
+                        <span>
+                            {typeof item === "string" ? item : item.name}
+                        </span>
+                    </button>
                 ))}
             </div>
         )}
