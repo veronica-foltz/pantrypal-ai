@@ -5,6 +5,8 @@ import Pantry from "./components/Pantry";
 
 import Recipes from "./components/Recipes";
 
+import Shopping from "./components/Shopping";
+
 function App() {
 
   const [token, setToken] = useState(
