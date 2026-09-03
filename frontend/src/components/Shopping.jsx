@@ -61,7 +61,7 @@ function Shopping() {
             <div className="shopping-list">
                 {shoppingItems.map((item, index) => (
                     <div className="shopping-item" key={index}>
-                        🛒 {typeof item === "string" ? item : item.name}
+                        {typeof item === "string" ? item : item.name}
                     </div>
                 ))}
             </div>

@@ -592,3 +592,29 @@ button {
   background: #fff7ed;
   color: #b54708;
 }
+
+.shopping-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.shopping-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: white;
+  padding: 16px 18px;
+  border-radius: 16px;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+.shopping-item::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border: 2px solid #1b9b86;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
