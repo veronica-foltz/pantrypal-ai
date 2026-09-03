@@ -259,6 +259,10 @@ function App() {
             <Recipes />
           )}
 
+          {activePage === "shopping" && (
+            <Shopping />
+          )}
+
       </main>
 
       <nav className="bottom-nav" aria-label="Main navigation">
@@ -283,7 +287,10 @@ function App() {
           <span>Recipes</span>
         </button>
 
-        <button className="nav-item">
+        <button
+          className="nav-item"
+          onClick={() => setActivePage("shopping")}
+        >
           <span className="nav-icon">☷</span>
           <span>Shopping</span>
         </button>
