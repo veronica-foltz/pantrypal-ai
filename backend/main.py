@@ -12,6 +12,8 @@ from security import hash_password, verify_password, create_access_token, get_cu
 
 from datetime import date, timedelta
 
+from openai import OpenAI
+
 RECIPES = [
     {
         "name": "French Toast",
@@ -34,6 +36,8 @@ RECIPES = [
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+client = OpenAI()
 
 app.add_middleware(
     CORSMiddleware,
@@ -347,9 +351,31 @@ def generate_ai_recipe(
             detail="Add pantry items before generating a recipe."
         )
 
+    prompt = f"""
+    Create one practical recipe using as many of these pantry ingredients
+    as possible:
+
+    {", ".join(ingredients)}
+
+    You may suggest a few basic missing ingredients if necessary.
+
+    Include:
+    - Recipe name
+    - Ingredients
+    - Step-by-step instructions
+    - Approximate cooking time
+
+    Keep the recipe simple and easy to follow.
+    """
+
+    response = client.responses.create(
+        model="gpt-5",
+        input=prompt
+    )
+
     return {
         "pantry_items": ingredients,
-        "message": "AI recipe generation is ready to be connected."
+        "recipe": response.output_text
     }
 
 @app.get("/shopping-list")
