@@ -327,6 +327,31 @@ def get_recipe_suggestions(
         "suggestions": suggestions
     }
 
+@app.post("/recipes/ai-generate")
+def generate_ai_recipe(
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(get_current_user)
+):
+    pantry_items = db.query(models.PantryItem).filter(
+        models.PantryItem.user_id == current_user.id
+    ).all()
+
+    ingredients = [
+        item.name.lower()
+        for item in pantry_items
+    ]
+
+    if not ingredients:
+        raise HTTPException(
+            status_code=400,
+            detail="Add pantry items before generating a recipe."
+        )
+
+    return {
+        "pantry_items": ingredients,
+        "message": "AI recipe generation is ready to be connected."
+    }
+
 @app.get("/shopping-list")
 def generate_shopping_list(
     db: Session = Depends(get_db),
