@@ -5,6 +5,7 @@ function Recipes() {
     const [recipes, setRecipes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
+    const [showAiPanel, setShowAiPanel] = useState(false);
 
     useEffect(() => {
         async function fetchRecipes() {
@@ -48,6 +49,30 @@ function Recipes() {
         <div>
           <p className="eyebrow">Cook with what you have</p>
           <h2>Recipe Ideas</h2>
+
+            <button className="ai-recipe-button"
+                onClick={() => setShowAiPanel(true)}
+            >
+                ✨ Generate AI Recipe
+            </button>
+
+            {showAiPanel && (
+                <div className="ai-recipe-panel">
+                    <h3>AI Recipe Assistant</h3>
+                    <p>
+                        PantryPal will use your pantry ingredients to create
+                        a personalized recipe.
+                    </p>
+
+                    <button
+                        className="close-ai-button"
+                        onClick={() => setShowAiPanel(false)}
+                    >
+                        Close
+                    </button>
+                </div>
+            )}
+
         </div>
       </div>
 
