@@ -6,6 +6,8 @@ function Recipes() {
     const [loading, setLoading] = useState(true);
     const [errorMessage, setErrorMessage] = useState("");
     const [showAiPanel, setShowAiPanel] = useState(false);
+    const [aiRecipe, setAiRecipe] = useState("");
+    const [aiLoading, setAiLoading] = useState(false);
 
     useEffect(() => {
         async function fetchRecipes() {
@@ -42,6 +44,40 @@ function Recipes() {
 
             fetchRecipes();
         }, []);
+    
+    const generateAiRecipe = async () => {
+        console.log("AI BUTTON CLICKED");
+
+        setShowAiPanel(true);
+        setAiLoading(true);
+        setAiRecipe("");
+
+        try {
+            const token = localStorage.getItem("access_token");
+
+            const response = await fetch(
+            "http://127.0.0.1:8000/recipes/ai-generate",
+            {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.detail || "Failed to generate recipe");
+        }
+
+        setAiRecipe(data.recipe);
+    } catch (error) {
+        setAiRecipe(error.message);
+    } finally {
+        setAiLoading(false);
+    }
+    };
 
   return (
     <section className="recipes-page">
@@ -51,7 +87,7 @@ function Recipes() {
           <h2>Recipe Ideas</h2>
 
             <button className="ai-recipe-button"
-                onClick={() => setShowAiPanel(true)}
+                onClick={generateAiRecipe}
             >
                 ✨ Generate AI Recipe
             </button>
@@ -63,6 +99,14 @@ function Recipes() {
                         PantryPal will use your pantry ingredients to create
                         a personalized recipe.
                     </p>
+
+                    {aiLoading && <p>Creating your recipe...</p>}
+
+                    {aiRecipe && (
+                        <div className="ai-recipe-result">
+                            {aiRecipe}
+                        </div>
+                    )}
 
                     <button
                         className="close-ai-button"
