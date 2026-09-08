@@ -246,13 +246,15 @@ function App() {
         </div>
       </section>
 
-          <Pantry 
-            searchTerm={searchTerm} 
-            selectedCategory={selectedCategory}
-            onItemsChange={setPantryItems}
-          />
-
               </>
+          )}
+
+          {activePage === "pantry" && (
+            <Pantry
+              searchTerm={searchTerm}
+              selectedCategory={selectedCategory}
+              onItemsChange={setPantryItems}
+            />
           )}
 
           {activePage === "recipes" && (
@@ -274,7 +276,10 @@ function App() {
           <span>Home</span>
         </button>
 
-        <button className="nav-item">
+        <button
+          className="nav-item"
+          onClick={() => setActivePage("pantry")}
+        >
           <span className="nav-icon">▦</span>
           <span>Pantry</span>
         </button>
