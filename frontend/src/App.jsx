@@ -162,7 +162,22 @@ function App() {
           </div>
         </section>
 
-      <section className="categories-section">
+              </>
+          )}
+
+          {activePage === "pantry" && (
+            <>
+              <section className="search-section">
+                <input
+                  type="text"
+                  placeholder="🔍 Search your pantry..."
+                  className="search-input"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </section>
+
+              <section className="categories-section">
         <div className="section-header">
           <h3>Categories</h3>
           <button onClick={() => setSelectedCategory("")}>
@@ -235,21 +250,6 @@ function App() {
           </button>
         </div>
       </section>
-
-              </>
-          )}
-
-          {activePage === "pantry" && (
-            <>
-              <section className="search-section">
-                <input
-                  type="text"
-                  placeholder="🔍 Search your pantry..."
-                  className="search-input"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </section>
 
               <Pantry
                 searchTerm={searchTerm}
