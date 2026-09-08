@@ -183,7 +183,19 @@ const filteredItems = items.filter((item) => {
 });
 
   return (
-  <div className="pantry-section">
+
+  <section className="pantry-section">
+
+    <div className="pantry-page-header">
+      <div>
+        <p className="eyebrow">Manage your ingredients</p>
+        <h2>My Pantry</h2>
+        <p className="pantry-subtitle">
+          Keep track of what you have and when it expires.
+        </p>
+      </div>
+    </div>
+
     <div className="pantry-header">
         <h2>My Pantry</h2>
 
@@ -370,6 +382,6 @@ const filteredItems = items.filter((item) => {
     </div>
   </div>
 )}
-  </div>
+  </section>
 );
 }

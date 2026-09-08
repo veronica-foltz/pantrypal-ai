@@ -697,3 +697,17 @@ button {
   border-radius: 12px;
   font-weight: 600;
 }
+
+.pantry-page-header {
+  margin-bottom: 24px;
+}
+
+.pantry-page-header h2 {
+  margin: 4px 0 6px;
+  font-size: 28px;
+}
+
+.pantry-subtitle {
+  margin: 0;
+  color: #667085;
+}
