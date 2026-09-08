@@ -359,13 +359,24 @@ def generate_ai_recipe(
 
     You may suggest a few basic missing ingredients if necessary.
 
-    Include:
-    - Recipe name
-    - Ingredients
-    - Step-by-step instructions
-    - Approximate cooking time
+    Use EXACTLY this format:
+
+    Recipe Name: [recipe name]
+
+    Ingredients:
+    - [ingredient]
+    - [ingredient]
+    - [ingredient]
+
+    Instructions:
+    1. [first step]
+    2. [second step]
+    3. [third step]
+
+    Cooking Time: [approximate time]
 
     Keep the recipe simple and easy to follow.
+    Do not add any additional sections.
     """
 
     response = client.responses.create(

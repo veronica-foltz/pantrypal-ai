@@ -100,7 +100,11 @@ function Recipes() {
                         a personalized recipe.
                     </p>
 
-                    {aiLoading && <p>Creating your recipe...</p>}
+                    {aiLoading && (
+                        <div className="ai-loading">
+                            ✨ Creating a recipe from your pantry...
+                        </div>
+                    )}
 
                     {aiRecipe && (
                         <div className="ai-recipe-result">

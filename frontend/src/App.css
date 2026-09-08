@@ -672,3 +672,20 @@ button {
   padding: 8px 14px;
   cursor: pointer;
 }
+
+.ai-recipe-result {
+  white-space: pre-wrap;
+  line-height: 1.7;
+  margin: 20px 0;
+  padding: 18px;
+  background: #f7faf9;
+  border-radius: 12px;
+}
+
+.ai-loading {
+  margin: 20px 0;
+  padding: 16px;
+  background: #f7faf9;
+  border-radius: 12px;
+  font-weight: 600;
+}
