@@ -8,6 +8,7 @@ function Recipes() {
     const [showAiPanel, setShowAiPanel] = useState(false);
     const [aiRecipe, setAiRecipe] = useState("");
     const [aiLoading, setAiLoading] = useState(false);
+    const [aiError, setAiError] = useState("");
 
     useEffect(() => {
         async function fetchRecipes() {
@@ -51,6 +52,7 @@ function Recipes() {
         setShowAiPanel(true);
         setAiLoading(true);
         setAiRecipe("");
+        setAiError("");
 
         try {
             const token = localStorage.getItem("access_token");
@@ -73,7 +75,8 @@ function Recipes() {
 
         setAiRecipe(data.recipe);
     } catch (error) {
-        setAiRecipe(error.message);
+        console.error(error);
+        setAiError("We couldn't generate a recipe right now. Please try again.");
     } finally {
         setAiLoading(false);
     }
@@ -103,6 +106,12 @@ function Recipes() {
                     {aiLoading && (
                         <div className="ai-loading">
                             ✨ Creating a recipe from your pantry...
+                        </div>
+                    )}
+
+                    {aiError && (
+                        <div className="ai-error">
+                            {aiError}
                         </div>
                     )}
 
