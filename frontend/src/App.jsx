@@ -138,16 +138,6 @@ function App() {
           <p className="error-message">{dashboardError}</p>
         )}
 
-        <section className="search-section">
-          <input
-            type="text"
-            placeholder="🔍 Search your pantry..."
-            className="search-input"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </section>
-
         <section className="expiring-card">
           <div className="section-header">
             <h3>Expiring Soon</h3>
@@ -250,11 +240,23 @@ function App() {
           )}
 
           {activePage === "pantry" && (
-            <Pantry
-              searchTerm={searchTerm}
-              selectedCategory={selectedCategory}
-              onItemsChange={setPantryItems}
-            />
+            <>
+              <section className="search-section">
+                <input
+                  type="text"
+                  placeholder="🔍 Search your pantry..."
+                  className="search-input"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </section>
+
+              <Pantry
+                searchTerm={searchTerm}
+                selectedCategory={selectedCategory}
+                onItemsChange={setPantryItems}
+              />
+            </>
           )}
 
           {activePage === "recipes" && (
