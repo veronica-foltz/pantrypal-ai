@@ -5,6 +5,7 @@ function Shopping() {
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [checkedItems, setCheckedItems] = useState([]);
+  const [newItem, setNewItem] = useState("");
 
     useEffect(() => {
     async function fetchShoppingList() {
@@ -60,6 +61,21 @@ function Shopping() {
         setCheckedItems([]);
     }
   
+
+    function addShoppingItem() {
+      const trimmedItem = newItem.trim();
+
+      if (!trimmedItem) {
+          return;
+      }
+
+      setShoppingItems((currentItems) => [
+          ...currentItems,
+          trimmedItem,
+      ]);
+
+      setNewItem("");
+    }
   
     return (
     <section className="shopping-page">
@@ -70,7 +86,23 @@ function Shopping() {
         </div>
       </div>
 
+      <div className="shopping-add">
+        <input
+            type="text"
+            placeholder="Add an item..."
+            value={newItem}
+            onChange={(e) => setNewItem(e.target.value)}
+            onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                   addShoppingItem();
+                }
+            }}
+        />
 
+        <button onClick={addShoppingItem}>
+            Add Item
+        </button>
+    </div>
 
         {loading ? (
             <p>Loading shopping list...</p>
