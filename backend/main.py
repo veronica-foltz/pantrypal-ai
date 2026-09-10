@@ -13,6 +13,7 @@ from security import hash_password, verify_password, create_access_token, get_cu
 from datetime import date, timedelta
 
 from openai import OpenAI
+import os
 
 RECIPES = [
     {
@@ -39,11 +40,13 @@ app = FastAPI()
 
 client = OpenAI()
 
+frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "http://127.0.0.1:5173"
+        frontend_url,
     ],
     allow_credentials=True,
     allow_methods=["*"],
