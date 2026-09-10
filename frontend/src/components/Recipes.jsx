@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "./config";
 
 function Recipes() {
 
@@ -16,7 +17,7 @@ function Recipes() {
                 const token = localStorage.getItem("access_token");
 
                 const response = await fetch(
-                    "http://127.0.0.1:8000/recipes/suggestions",
+                    `${API_URL}/recipes/suggestions`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`,
@@ -58,7 +59,7 @@ function Recipes() {
             const token = localStorage.getItem("access_token");
 
             const response = await fetch(
-            "http://127.0.0.1:8000/recipes/ai-generate",
+            `${API_URL}/recipes/ai-generate`,
             {
                 method: "POST",
                 headers: {

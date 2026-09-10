@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "./config";
 
 export default function Pantry({ searchTerm, selectedCategory,onItemsChange,}) {
   const [items, setItems] = useState([]);
@@ -36,7 +37,7 @@ export default function Pantry({ searchTerm, selectedCategory,onItemsChange,}) {
         const token = localStorage.getItem("access_token");
 
         const response = await fetch(
-          "http://127.0.0.1:8000/pantry-items",
+          fetch(`${API_URL}/pantry-items`),
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -77,8 +78,8 @@ export default function Pantry({ searchTerm, selectedCategory,onItemsChange,}) {
     const token = localStorage.getItem("access_token");
 
     const url = editingItem
-    ? `http://127.0.0.1:8000/pantry-items/${editingItem.id}`
-    : "http://127.0.0.1:8000/pantry-items";
+      ? `${API_URL}/pantry-items/${editingItem.id}`
+      : `${API_URL}/pantry-items`;
 
     const method = editingItem ? "PUT" : "POST";
 
@@ -146,7 +147,7 @@ async function handleDeleteItem(itemId) {
     const token = localStorage.getItem("access_token");
 
     const response = await fetch(
-      `http://127.0.0.1:8000/pantry-items/${itemId}`,
+      `${API_URL}/pantry-items/${itemId}`,
       {
         method: "DELETE",
         headers: {

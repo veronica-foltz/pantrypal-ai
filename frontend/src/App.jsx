@@ -7,6 +7,8 @@ import Recipes from "./components/Recipes";
 
 import Shopping from "./components/Shopping";
 
+import { API_URL } from "./config";
+
 function App() {
 
   const [token, setToken] = useState(
@@ -26,7 +28,7 @@ function App() {
       setLoginMessage("Signing in as guest...");
 
       const response = await fetch(
-        "http://127.0.0.1:8000/guest-login",
+        `${API_URL}/guest-login`,
         {
          method: "POST",
         }
@@ -52,7 +54,7 @@ function App() {
       setDashboardError("");
 
       const response = await fetch(
-        "http://127.0.0.1:8000/dashboard",
+        `${API_URL}/dashboard`,
         {
           headers: {
             Authorization: `Bearer ${activeToken}`,
