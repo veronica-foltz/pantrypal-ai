@@ -37,7 +37,7 @@ export default function Pantry({ searchTerm, selectedCategory,onItemsChange,}) {
         const token = localStorage.getItem("access_token");
 
         const response = await fetch(
-          fetch(`${API_URL}/pantry-items`),
+  `       ${API_URL}/pantry-items`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
