@@ -4,7 +4,7 @@ PantryPal AI is a full-stack pantry management and recipe assistant that helps u
 
 The application also integrates AI-powered recipe generation using the OpenAI API.
 
-## Live Demo
+## Live Demo 
 
 Frontend:
 https://main.dyyad06ps29td.amplifyapp.com
